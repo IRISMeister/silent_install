@@ -38,3 +38,10 @@ C:\>curl -H "Content-Type: application/json; charset=UTF-8" -H "Accept:applicati
 5) 削除
 C:\temp\silentinstall>remove.bat
 
+PowerShell
+下記を実行した後でないとインストーラが動作しない。いずれも管理者権限が要る。
+Set-ExecutionPolicy -ExecutionPolicy Restricted -Scope LocalMachine -force
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -force
+
+powershell.exe -File silentinstall.ps1 -ExecutionPolicy Bypass
+powershell.exe -File remove.ps1 -ExecutionPolicy Bypass
