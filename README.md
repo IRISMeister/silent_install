@@ -43,8 +43,8 @@ $ sudo iris stop iris quietly && sudo iris delete iris && sudo rm -fR /usr/iris
 ## Non root + Lockdown installation
 Will install IRIS into $HOME/instance name. Registry will be located in $HOME/IRISSYS.
 ```
-$ kit='IRIS-2020.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh
-$ kit='IRIS-2020.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh iris2 $HOME/iris2
+$ IRISSYS=$HOME/IRISSYS kit='IRIS-2020.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh
+$ IRISSYS=$HOME/IRISSYS kit='IRIS-2020.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh iris2 $HOME/iris2
 ```
 
 For non root installation, IRISSYS environment variable is required.  
