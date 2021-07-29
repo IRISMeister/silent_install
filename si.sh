@@ -14,6 +14,10 @@ gmheap=37568
 ssport=51773
 webport=52773
 kittemp=/tmp/iriskit
+ISC_PACKAGE_INSTALLDIR=/usr/irissys
+ISC_PACKAGE_INSTANCENAME=iris
+ISC_PACKAGE_MGRUSER=irisowner
+ISC_PACKAGE_IRISUSER=irisusr
 # -- edit here for optimal settings --
 if [ -n "$WRC_USERNAME" ]; then
   if [ ! -e $kit.tar.gz ]; then
@@ -24,62 +28,53 @@ if [ -n "$WRC_USERNAME" ]; then
 fi
 
 if [ $# -eq 2 ]; then
-  instance=$1
-  installdir=$2
+  ISC_PACKAGE_INSTANCENAME=$1
+  ISC_PACKAGE_INSTALLDIR=$2
 else
-  instance=iris
-  installdir=/usr/irissys
+  ISC_PACKAGE_INSTANCENAME=iris
+  ISC_PACKAGE_INSTALLDIR=/usr/irissys
 fi
 
-#read -p "Will install instance '$instance' into '$installdir'.  Are you sure? (y/N): " yn
-#case "$yn" in 
-#  [yY]*) ;;
-#  *) exit 1;;
-#esac
-
-# Specifies the effective user for InterSystems IRIS processes. 
-export ISC_PACKAGE_IRISGROUP=irisusr
-# Specifies the effective user for the InterSystems IRIS Superserver. 
-export ISC_PACKAGE_IRISUSER=irisusr
-#Specifies the group that is allowed to start and stop the instance
-export ISC_PACKAGE_MGRGROUP=irisowner
-#Specifies the login name of the owner of the installation. For example:
-export ISC_PACKAGE_MGRUSER=irisowner
-
-export ISC_PACKAGE_INSTANCENAME=$instance
-export ISC_PACKAGE_INSTALLDIR=$installdir
-
-export ISC_PACKAGE_UNICODE=Y
-export ISC_PACKAGE_INITIAL_SECURITY=Normal
-export ISC_PACKAGE_USER_PASSWORD=$password
-export ISC_PACKAGE_CSPSYSTEM_PASSWORD=$password
-export ISC_PACKAGE_CLIENT_COMPONENTS=
-export ISC_PACKAGE_SUPERSERVER_PORT=$ssport
-export ISC_PACKAGE_WEBSERVER_PORT=$webport
-export ISC_INSTALLER_MANIFEST=$kittemp/$kit/manifest/Installer.cls
-export ISC_INSTALLER_LOGFILE=installer_log
-export ISC_INSTALLER_LOGLEVEL=3
-export ISC_INSTALLER_PARAMETERS=routines=$routines,locksiz=$locksiz,globals8k=$globals8k,gmheap=$gmheap
 
 useradd -m $ISC_PACKAGE_MGRUSER --uid 51773 | true
 useradd -m $ISC_PACKAGE_IRISUSER --uid 52773 | true
 
+# install iris
 mkdir -p $kittemp
 chmod og+rx $kittemp
 
 # requird for non-root install
 rm -fR $kittemp/$kit | true
 tar -xvf $kit.tar.gz -C $kittemp
-cp -fR manifest/ $kittemp/$kit
+cp -f Installer.cls $kittemp/$kit; chmod 777 $kittemp/$kit/Installer.cls
 pushd $kittemp/$kit
+sudo ISC_PACKAGE_INSTANCENAME=$ISC_PACKAGE_INSTANCENAME \
+ISC_PACKAGE_IRISGROUP=$ISC_PACKAGE_IRISUSER \
+ISC_PACKAGE_IRISUSER=$ISC_PACKAGE_IRISUSER \
+ISC_PACKAGE_MGRGROUP=$ISC_PACKAGE_MGRUSER \
+ISC_PACKAGE_MGRUSER=$ISC_PACKAGE_MGRUSER \
+ISC_PACKAGE_INSTALLDIR=$ISC_PACKAGE_INSTALLDIR \
+ISC_PACKAGE_UNICODE=Y \
+ISC_PACKAGE_INITIAL_SECURITY=Normal \
+ISC_PACKAGE_USER_PASSWORD=$password \
+ISC_PACKAGE_CSPSYSTEM_PASSWORD=$password \
+ISC_PACKAGE_CLIENT_COMPONENTS= \
+ISC_PACKAGE_SUPERSERVER_PORT=$ssport \
+ISC_PACKAGE_WEBSERVER_PORT=$webport \
+ISC_INSTALLER_MANIFEST=$kittemp/$kit/Installer.cls \
+ISC_INSTALLER_LOGFILE=installer_log \
+ISC_INSTALLER_LOGLEVEL=3 \
+ISC_INSTALLER_PARAMETERS=routines=$routines,locksiz=$locksiz,globals8k=$globals8k,gmheap=$gmheap \
 ./irisinstall_silent
 popd
 rm -fR $kittemp
+
+# stop iris to apply config settings and license (if any) 
+iris stop $ISC_PACKAGE_INSTANCENAME quietly
 
 # copy iris.key
 if [ -e iris.key ]; then
   cp iris.key $ISC_PACKAGE_INSTALLDIR/mgr/
 fi
 
-# Apply config settings and license (if any) 
-iris restart $ISC_PACKAGE_INSTANCENAME
+iris start $ISC_PACKAGE_INSTANCENAME quietly
