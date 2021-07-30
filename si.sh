@@ -14,8 +14,8 @@ gmheap=37568
 ssport=51773
 webport=52773
 kittemp=/tmp/iriskit
-ISC_PACKAGE_INSTALLDIR=/usr/irissys
 ISC_PACKAGE_INSTANCENAME=iris
+ISC_PACKAGE_INSTALLDIR=/usr/irissys
 ISC_PACKAGE_MGRUSER=irisowner
 ISC_PACKAGE_IRISUSER=irisusr
 # -- edit here for optimal settings --
@@ -30,9 +30,6 @@ fi
 if [ $# -eq 2 ]; then
   ISC_PACKAGE_INSTANCENAME=$1
   ISC_PACKAGE_INSTALLDIR=$2
-else
-  ISC_PACKAGE_INSTANCENAME=iris
-  ISC_PACKAGE_INSTALLDIR=/usr/irissys
 fi
 
 

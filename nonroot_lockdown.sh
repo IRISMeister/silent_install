@@ -10,21 +10,20 @@ ssport=51773
 webport=52773
 kittemp=/tmp/iriskit
 ISC_PACKAGE_INSTANCENAME=iris
+ISC_PACKAGE_INSTALLDIR=$HOME/$ISC_PACKAGE_INSTANCENAME
 # -- edit here for optimal settings --
 if [ -n "$WRC_USERNAME" ]; then
   if [ ! -e $kit.tar.gz ]; then
-    wget -qO /dev/null --keep-session-cookies --save-cookies cookie --post-data="UserName=$WRC_USERNAME&Password=$WRC_PASSWORD" 'https://login.intersystems.com/login/SSO.UI.Login.cls?referrer=https%253A//wrc.intersystems.com/wrc/login.csp' 
-    wget --secure-protocol=TLSv1_2 -O $kit.tar.gz --load-cookies cookie "https://wrc.intersystems.com/wrc/WRC.StreamServer.cls?FILE=/wrc/Live/ServerKits/$kit.tar.gz"
+    #wget -qO /dev/null --keep-session-cookies --save-cookies cookie --post-data="UserName=$WRC_USERNAME&Password=$WRC_PASSWORD" 'https://login.intersystems.com/login/SSO.UI.Login.cls?referrer=https%253A//wrc.intersystems.com/wrc/login.csp' 
+    #wget --secure-protocol=TLSv1_2 -O $kit.tar.gz --load-cookies cookie "https://wrc.intersystems.com/wrc/WRC.StreamServer.cls?FILE=/wrc/Live/ServerKits/$kit.tar.gz"
     rm -f cookie
   fi
 fi
 
 if [ $# -eq 2 ]; then
   ISC_PACKAGE_INSTANCENAME=$1
-else
-  ISC_PACKAGE_INSTANCENAME=iris
+  ISC_PACKAGE_INSTALLDIR=$2
 fi
-ISC_PACKAGE_INSTALLDIR=$HOME/$ISC_PACKAGE_INSTANCENAME
 
 
 
@@ -40,7 +39,7 @@ rm -fR $kittemp/$kit | true
 tar -xvf $kit.tar.gz -C $kittemp
 cp -f Installer.cls $kittemp/$kit; chmod 777 $kittemp/$kit/Installer.cls
 pushd $kittemp/$kit
-sudo IRISSYS=$HOME/IRISSYS
+IRISSYS=$HOME/IRISSYS
 ISC_PACKAGE_INSTANCENAME=$ISC_PACKAGE_INSTANCENAME \
 ISC_PACKAGE_INSTALLDIR=$ISC_PACKAGE_INSTALLDIR \
 ISC_PACKAGE_UNICODE=Y \

@@ -9,15 +9,15 @@ cd silent_install
 ```
 Now start installation.
 ```bash
-$ sudo kit='IRIS-2020.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./si.sh
+$ sudo kit='IRIS-2021.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./si.sh
 ```
 If you don't have a valid WRC account, aquire a distribution kit separately and place it in current folder. And call si.sh without WRC_USERNAME variable.
 ```bash
-$ sudo kit='IRIS-2020.1.0.215.0-lnxubuntux64' ./si.sh
+$ sudo kit='IRIS-2021.1.0.215.0-lnxubuntux64' ./si.sh
 ```
 You may have to explicitly specify platform name (when installing to Amazon Linux for example)
 ```bash
-$ sudo kit='IRIS-2020.1.0.215.0-lnxrhx64' ISC_PACKAGE_PLATFORM='lnxrhx64' ./si.sh
+$ sudo kit='IRIS-2021.1.0.215.0-lnxrhx64' ISC_PACKAGE_PLATFORM='lnxrhx64' ./si.sh
 ```
 
 If you omit parameters, it will install IRIS under /usr/irissys by the instance name 'iris'.  
@@ -42,9 +42,10 @@ $ sudo iris stop iris quietly && sudo iris delete iris && sudo rm -fR /usr/iris
 ```
 ## Non root + Lockdown installation
 Will install IRIS into $HOME/instance name. Registry will be located in $HOME/IRISSYS.
+Assuming you are logging in by using irisowner user.
 ```
-$ IRISSYS=$HOME/IRISSYS kit='IRIS-2020.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh
-$ IRISSYS=$HOME/IRISSYS kit='IRIS-2020.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh iris2 $HOME/iris2
+$ IRISSYS=$HOME/IRISSYS kit='IRIS-2021.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh
+$ IRISSYS=$HOME/IRISSYS kit='IRIS-2021.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh iris2 $HOME/iris2
 ```
 
 For non root installation, IRISSYS environment variable is required.  
@@ -60,6 +61,7 @@ If you want to completely delete iris installation, do something like this.
 ```
 $ iris stop iris quietly && iris delete iris && chmod -R 777 /home/irisowner/iris && rm -fR /home/irisowner/iris
 $ rm -fR /home/irisowner/IRISSYS && rm -f $HOME/bin/iris*
+$ rm IRISInstall*.log
 ```
 
 ## For Windows

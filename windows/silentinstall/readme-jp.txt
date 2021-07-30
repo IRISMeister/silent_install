@@ -20,7 +20,7 @@ C:\temp\silentinstall>dir
  C:\temp\silentinstall のディレクトリ
 2020/11/26  17:58    <DIR>          .
 2020/11/26  17:58    <DIR>          ..
-2020/11/09  18:50       264,159,944 IRIS-2020.1.0.215.0-win_x64.exe
+2020/11/09  18:50       264,159,944 IRIS-2021.1.0.215.0-win_x64.exe
 2020/11/26  17:58    <DIR>          project
 2020/11/26  17:57               808 readme-jp.txt
 2020/11/09  19:18                96 remove.bat
