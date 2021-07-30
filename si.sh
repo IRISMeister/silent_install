@@ -45,7 +45,7 @@ rm -fR $kittemp/$kit | true
 tar -xvf $kit.tar.gz -C $kittemp
 cp -f Installer.cls $kittemp/$kit; chmod 777 $kittemp/$kit/Installer.cls
 pushd $kittemp/$kit
-sudo ISC_PACKAGE_INSTANCENAME=$ISC_PACKAGE_INSTANCENAME \
+ISC_PACKAGE_INSTANCENAME=$ISC_PACKAGE_INSTANCENAME \
 ISC_PACKAGE_IRISGROUP=$ISC_PACKAGE_IRISUSER \
 ISC_PACKAGE_IRISUSER=$ISC_PACKAGE_IRISUSER \
 ISC_PACKAGE_MGRGROUP=$ISC_PACKAGE_MGRUSER \
