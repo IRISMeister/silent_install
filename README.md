@@ -41,11 +41,11 @@ If you want to completely delete iris installation, do something like this.
 $ sudo iris stop iris quietly && sudo iris delete iris && sudo rm -fR /usr/iris
 ```
 ## Non root + Lockdown installation
-Will install IRIS into $HOME/instance name. Registry will be located in $HOME/IRISSYS.
+Will install IRIS into $HOME/instance name. Registry will be located in $HOME/irissys.
 Assuming you are logging in by using irisowner user.
 ```
-$ IRISSYS=$HOME/IRISSYS kit='IRIS-2021.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh
-$ IRISSYS=$HOME/IRISSYS kit='IRIS-2021.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh iris2 $HOME/iris2
+$ kit='IRIS-2021.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh
+$ kit='IRIS-2021.1.0.215.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWORD='YourPassWord' ./nonroot_lockdown.sh iris2 $HOME/iris2
 ```
 
 For non root installation, IRISSYS environment variable is required.  
