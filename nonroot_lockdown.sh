@@ -9,17 +9,17 @@ ssport=51773
 webport=52773
 kittemp=/tmp/iriskit
 ISC_PACKAGE_INSTANCENAME=iris
-ISC_PACKAGE_INSTALLDIR=/usr/irissys
+ISC_PACKAGE_INSTALLDIR=/home/irisowner/irissys
 ISC_PACKAGE_IRISGROUP=irisowner
 ISC_PACKAGE_IRISUSER=irisowner
 ISC_PACKAGE_MGRGROUP=irisowner
 ISC_PACKAGE_MGRUSER=irisowner
-IRISSYS=/home/irisowner/irissys
+IRISSYS=$ISC_PACKAGE_INSTALLDIR
 # -- edit here for optimal settings --
 if [ -n "$WRC_USERNAME" ]; then
   if [ ! -e $kit.tar.gz ]; then
-    #wget -qO /dev/null --keep-session-cookies --save-cookies cookie --post-data="UserName=$WRC_USERNAME&Password=$WRC_PASSWORD" 'https://login.intersystems.com/login/SSO.UI.Login.cls?referrer=https%253A//wrc.intersystems.com/wrc/login.csp' 
-    #wget --secure-protocol=TLSv1_2 -O $kit.tar.gz --load-cookies cookie "https://wrc.intersystems.com/wrc/WRC.StreamServer.cls?FILE=/wrc/Live/ServerKits/$kit.tar.gz"
+    wget -qO /dev/null --keep-session-cookies --save-cookies cookie --post-data="UserName=$WRC_USERNAME&Password=$WRC_PASSWORD" 'https://login.intersystems.com/login/SSO.UI.Login.cls?referrer=https%253A//wrc.intersystems.com/wrc/login.csp' 
+    wget --secure-protocol=TLSv1_2 -O $kit.tar.gz --load-cookies cookie "https://wrc.intersystems.com/wrc/WRC.StreamServer.cls?FILE=/wrc/Live/ServerKits/$kit.tar.gz"
     rm -f cookie
   fi
 fi
@@ -27,10 +27,8 @@ fi
 if [ $# -eq 2 ]; then
   ISC_PACKAGE_INSTANCENAME=$1
   ISC_PACKAGE_INSTALLDIR=$2
+  IRISSYS=$ISC_PACKAGE_INSTALLDIR
 fi
-
-
-
 
 if [ ! -d $IRISSYS ]; then
   mkdir $IRISSYS
@@ -70,7 +68,10 @@ if [ -e iris.key ]; then
 fi
 
 # need | true to continue. why?
-iris merge iris $(pwd)/merge.cpf | true
+IRISSYS=$IRISSYS ISC_PACKAGE_INSTALLDIR=$ISC_PACKAGE_INSTALLDIR iris merge iris $(pwd)/merge.cpf | true
 
 # stop iris to apply config settings and license (if any) 
-iris restart $ISC_PACKAGE_INSTANCENAME quietly
+IRISSYS=$IRISSYS iris restart $ISC_PACKAGE_INSTANCENAME quietly
+
+# Just for convenience
+echo export IRISSYS=$IRISSYS >> .bashrc
