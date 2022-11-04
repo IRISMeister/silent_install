@@ -41,9 +41,15 @@ If you want to completely delete iris installation, do something like this.
 $ sudo iris stop iris quietly && sudo iris delete iris && sudo rm -fR /usr/iris
 ```
 ## Non root + Lockdown installation
-Will install IRIS into $HOME/instance name. Registry will be located in $HOME/irissys.
-You have to create a linux account (which IRIS runs under) separately.
+Will install IRIS into /home/irisowner/iris. Registry will be located in /home/irisowner/irissys.
+You have to create a linux account irisowner (which IRIS runs under) separately.
 Assuming you've created and are logging in as irisowner [UID=51773] user.
+```
+$ sudo groupadd irisowner --gid 51773 | true
+$ sudo useradd -m irisowner --uid 51773 --gid irisowner
+$ sudo su - irisowner
+```
+
 ```
 $ whoami
 irisowner

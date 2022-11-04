@@ -67,11 +67,12 @@ if [ -e iris.key ]; then
   cp iris.key $ISC_PACKAGE_INSTALLDIR/mgr/
 fi
 
+PATH=$PATH:$HOME/bin
 # need | true to continue. why?
-IRISSYS=$IRISSYS ISC_PACKAGE_INSTALLDIR=$ISC_PACKAGE_INSTALLDIR iris merge iris $(pwd)/merge.cpf | true
+IRISSYS=$IRISSYS ISC_PACKAGE_INSTALLDIR=$ISC_PACKAGE_INSTALLDIR $HOME/bin/iris merge iris $(pwd)/merge.cpf | true
 
 # stop iris to apply config settings and license (if any) 
-IRISSYS=$IRISSYS iris restart $ISC_PACKAGE_INSTANCENAME quietly
+IRISSYS=$IRISSYS $HOME/bin/iris restart $ISC_PACKAGE_INSTANCENAME quietly
 
 # Just for convenience
 echo export IRISSYS=$IRISSYS >> .bashrc
