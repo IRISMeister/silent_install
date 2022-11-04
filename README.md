@@ -60,10 +60,9 @@ $ kit='IRIS-2021.1.2.338.0-lnxubuntux64' WRC_USERNAME='YourUserName' WRC_PASSWOR
 For non root installation, IRISSYS environment variable is required.  
 https://docs.intersystems.com/irislatest/csp/docbook/Doc.View.cls?KEY=GCI_unix#GCI_unix_install_nonroot  
 You always need IRISSYS env variable for all instance operations.  $HOME/bin need to be included in $PATH if it is not.  
-So consider adding following lines to .bashrc
+Consider adding following lines to .bashrc
 ```
-export IRISSYS=$HOME/IRISSYS
-export PATH=$PATH:$HOME/bin
+export IRISSYS=$HOME/irissys
 ```
 
 If you want to completely delete iris installation, do something like this.
