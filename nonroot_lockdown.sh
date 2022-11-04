@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# let it fail 
+# let it fail if it's not exist
 id irisowner
 
 # ++ edit here for optimal settings ++
@@ -9,12 +9,12 @@ ssport=51773
 webport=52773
 kittemp=/tmp/iriskit
 ISC_PACKAGE_INSTANCENAME=iris
-ISC_PACKAGE_INSTALLDIR=/home/irisowner/irissys
+ISC_PACKAGE_INSTALLDIR=/home/irisowner/iris
 ISC_PACKAGE_IRISGROUP=irisowner
 ISC_PACKAGE_IRISUSER=irisowner
 ISC_PACKAGE_MGRGROUP=irisowner
 ISC_PACKAGE_MGRUSER=irisowner
-IRISSYS=$ISC_PACKAGE_INSTALLDIR
+IRISSYS=/home/irisowner/irissys
 # -- edit here for optimal settings --
 if [ -n "$WRC_USERNAME" ]; then
   if [ ! -e $kit.tar.gz ]; then
@@ -27,7 +27,7 @@ fi
 if [ $# -eq 2 ]; then
   ISC_PACKAGE_INSTANCENAME=$1
   ISC_PACKAGE_INSTALLDIR=$2
-  IRISSYS=$ISC_PACKAGE_INSTALLDIR
+  IRISSYS=/home/irisowner/irissys
 fi
 
 if [ ! -d $IRISSYS ]; then
